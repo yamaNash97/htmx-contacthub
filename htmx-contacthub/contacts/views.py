@@ -11,6 +11,8 @@ def index(request):
 
 @login_required
 def search_contacts(request):
+    import time
+    time.sleep(1)
     query = request.GET.get('search', '')
     
     contacts = request.user.contacts.filter(
