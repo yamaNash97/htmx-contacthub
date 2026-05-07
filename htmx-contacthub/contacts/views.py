@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.views.decorators.http import require_http_methods #only going to allow POST request
 from .forms import contactForm
 
 
@@ -23,3 +24,18 @@ def search_contacts(request):
         Q(name__icontains= query) | Q(email__icontains=query)
     )
     return render(request, 'partials/contact-list.html', {'contacts': contacts} )
+
+@login_required
+@require_http_methods(['POST'])
+def create_contact(request):
+    form = contactForm(request.POST)
+    if form.is_valid():
+        contact = form.save(commit=False)
+        contact.user = request.user 
+        contact.save()
+        #return partial containing a new row for our user
+        #that we can add to the table
+        context= {'contact' : contact}
+        response = render(request, 'partials/contact-row.html', context)
+        response['HX-Trigger']= 'Contact_added_successfuly'
+        return response
