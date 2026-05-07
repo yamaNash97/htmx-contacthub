@@ -4,35 +4,8 @@
 
 <div>
     <h1 class="text-4xl text-success mb-4">Contact Manager</h1>
-    <form action="post" class=" mb-4">
-        {% csrf_token %}
-        <div class="form w-full">
-            <label class="label">
-                <span class="label-text">Name</span>
-            </label>
-            {{ form.name }}
-
-            {% if form.name.errors %}
-            <label class="label text-error">
-                {{ form.name.errors }}
-            </label>
-            {% endif %}
-        </div>
-        <div class="form w-full">
-            <label class="label">
-                <span class="label-text">Email</span>
-            </label>
-
-            {{ form.email }}
-
-            {% if form.email.errors %}
-            <label class="label text-error">
-                {{ form.email.errors }}
-            </label>
-            {% endif %}
-        </div>
-        <button type="submit" class="btn btn-primary mt-2">Add Contact</button>
-    </form>
+    <button class="btn btn-primary" onclick="contact_modal.showModal()">Add Contact</button>
+    {% include 'partials/add-contact.html' %}
     <label class="input mb-5 flex items-center gap-2">
         <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
